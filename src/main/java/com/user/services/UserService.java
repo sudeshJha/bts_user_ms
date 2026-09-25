@@ -18,4 +18,12 @@ public class UserService {
 		user = userRepo.save(user);
 		return user;
 	}
+	
+	public boolean checkEmailExist(String email) {
+		return userRepo.existsByEmail(email);
+	}
+	
+	public boolean checkPhoneExist(String phone) {
+		return userRepo.existsByPhone(phone);
+	}
 }
