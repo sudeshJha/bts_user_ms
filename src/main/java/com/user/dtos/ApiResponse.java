@@ -1,10 +1,15 @@
 package com.user.dtos;
 
-public class ApiResponse {
+public class ApiResponse<T> {
 	private String message;
-	private Object response;
+	private T response;
 	
-	public ApiResponse(String message, Object response) {
+	public ApiResponse() {
+		super();
+	}
+	
+	public ApiResponse(String message, T response) {
+		super();
 		this.message = message;
 		this.response = response;
 	}
@@ -17,11 +22,11 @@ public class ApiResponse {
 		this.message = message;
 	}
 
-	public Object getResponse() {
+	public T getResponse() {
 		return response;
 	}
 
-	public void setResponse(Object response) {
+	public void setResponse(T response) {
 		this.response = response;
 	}
 	

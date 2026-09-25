@@ -1,10 +1,12 @@
 package com.user.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.user.dtos.ApiResponse;
 import com.user.dtos.UserDto;
 import com.user.models.User;
 import com.user.services.UserService;
@@ -16,7 +18,7 @@ public class AuthRestController {
 	private UserService userService;
 	
 	@PostMapping("/signup")
-	public String signup(@RequestBody UserDto userDto) {
+	public ApiResponse<User> signup(@RequestBody UserDto userDto) {
 		
 		User user = new User();
 		user.setName(userDto.getName());
@@ -24,9 +26,13 @@ public class AuthRestController {
 		user.setPhone(userDto.getPhone());
 		user.setPassword(userDto.getPassword());
 		
-		userService.userSignup(user);
+		user = userService.userSignup(user);
 		
-		return "signup succesful";
+		ApiResponse<User> response = new ApiResponse<User>();
+		response.setMessage("Signup Successful");
+		response.setResponse(user);
+		
+		return response;
 	}
 	
 }
