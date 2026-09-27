@@ -1,9 +1,8 @@
-package com.user.dtos;
+package com.bts.auth.dtos;
 
 import jakarta.validation.constraints.Pattern;
 
 public class UserDto {
-	private Long userId;
 	private  String name;
 	
 	@Pattern(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\\\.[a-zA-Z]{2,}$")
@@ -15,19 +14,18 @@ public class UserDto {
 	@Pattern(regexp = "^[a-zA-Z0-9!@#$()_]{8,}$")
 	private String password;
 	
+	public UserDto() {
+		super();
+	}
+	
 	public UserDto(String name, String email, String phone, String password) {
+		super();
 		this.name = name;
 		this.email = email;
 		this.phone = phone;
 		this.password = password;
 	}
 
-	public Long getUserId() {
-		return userId;
-	}
-	public void setUserId(Long userId) {
-		this.userId = userId;
-	}
 	public String getName() {
 		return name;
 	}

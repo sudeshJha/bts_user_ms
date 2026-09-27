@@ -1,4 +1,4 @@
-package com.user.dtos;
+package com.bts.auth.dtos;
 
 public class ApiResponse<T> {
 	private String message;

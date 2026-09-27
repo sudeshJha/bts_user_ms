@@ -1,11 +1,11 @@
-package com.user.services;
+package com.bts.auth.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.user.models.User;
-import com.user.models.UserType;
-import com.user.repos.UserRepo;
+import com.bts.auth.models.User;
+import com.bts.auth.models.UserType;
+import com.bts.auth.repos.UserRepo;
 
 @Service
 public class UserService {
@@ -16,6 +16,7 @@ public class UserService {
 	public User userSignup(User user) {
 		user.setUserType(UserType.PASSENGER);
 		user = userRepo.save(user);
+		user.setPassword(null);
 		return user;
 	}
 	

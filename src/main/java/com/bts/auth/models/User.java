@@ -1,4 +1,4 @@
-package com.user.models;
+package com.bts.auth.models;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -36,6 +36,8 @@ public class User {
 	@Column(nullable=false)
 	private String password;
 	
+	private String gender;
+	
 	@Enumerated(EnumType.STRING)
 	@Column(nullable=false)
 	private UserType userType;
@@ -44,10 +46,10 @@ public class User {
 	@Column(nullable=false)
 	private Status status = Status.INACTIVE;
 	
-	private String pic;
-	
 	@Column(nullable=false)
 	private Boolean emailVerified = false;
+	
+	private String pic;
 	
 	private Boolean phoneVerfified;
 	
