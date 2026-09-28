@@ -72,7 +72,6 @@ public class AuthRestController {
 	@PostMapping("/operator/signup")
 	public String operatorSignup(@ModelAttribute OperatorDto operatorDto) {
 		
-		System.out.println(operatorDto.getLicense());
 		if(operatorDto.getLicense() == null || operatorDto.getLicense().isEmpty()) {
 			return "License could not be processed";
 		}
