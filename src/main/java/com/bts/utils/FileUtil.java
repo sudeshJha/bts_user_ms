@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 @Component
 public class FileUtil {
@@ -23,11 +24,22 @@ public class FileUtil {
 			Files.createDirectories(path);
 		}catch(IOException exp) {
 			System.out.println("User Directory " + userId + " already exsits");
+			System.out.println(exp.getMessage());
 		}
 		
 	}
 	
-	public boolean fileUpload() {
-		return true;
+	public void fileUpload(String uploadPath, MultipartFile file) {
+		
+		String fileName = file.getOriginalFilename();
+		Path path = Paths.get(uploadPath + File.separator + fileName);
+		
+		try {
+			
+			Files.write(path, file.getBytes());
+		}catch(IOException exp) {
+			System.out.println("Error uploading " + fileName);
+			System.out.println(exp.getMessage());
+		}
 	}
 }

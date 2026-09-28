@@ -14,7 +14,6 @@ import lombok.Setter;
 public class OperatorDto {
 
 	private UserDto userInfo;
-	private String gender;
 	private String address;
 	private Float seaterBasePrice;
 	private Float sleeperBasePrice;

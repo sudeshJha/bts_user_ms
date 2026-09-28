@@ -24,4 +24,6 @@ public class UserDto {
 	@JsonProperty(access=JsonProperty.Access.WRITE_ONLY)
 	@Pattern(regexp = "^[a-zA-Z0-9!@#$()_]{8,}$")
 	private String password;
+	
+	private String gender;
 }
