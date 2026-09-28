@@ -15,8 +15,10 @@ import com.bts.dtos.ApiResponse;
 import com.bts.dtos.OperatorDto;
 import com.bts.dtos.PassengerDto;
 import com.bts.dtos.UserDto;
+import com.bts.models.Operator;
 import com.bts.models.Passenger;
 import com.bts.models.User;
+import com.bts.services.OperatorService;
 import com.bts.services.PassengerService;
 import com.bts.services.UserService;
 
@@ -25,14 +27,15 @@ public class AuthRestController {
 
 	@Autowired
 	private PassengerService passengerService;
+	
+	@Autowired
+	private OperatorService operatorService;
 
 	@Autowired
 	private  UserService userService;
 
 	@PostMapping("/signup")
 	public ResponseEntity<ApiResponse<PassengerDto>> signup(@RequestBody UserDto userDto) {
-
-		System.out.println(userDto.getPassword());
 		
 		if(userService.checkEmailExist(userDto.getEmail())) {
 			return ResponseEntity
@@ -60,25 +63,45 @@ public class AuthRestController {
 
 		BeanUtils.copyProperties(passenger.getUser(),userInfo);
 
-
 		passengerDto.setPassengerId(passenger.getPassengerId());
 		passengerDto.setUserInfo(userInfo);
 
-		ApiResponse<PassengerDto> response = new ApiResponse<>();
-		response.setMessage("Signup Successfull");
-		response.setResponse(passengerDto);
 
-		return ResponseEntity.ok(response);
+		return ResponseEntity.ok(new ApiResponse<>("Signup Successfull",passengerDto));
+
 	}
 	
 	@PostMapping("/operator/signup")
-	public String operatorSignup(@ModelAttribute OperatorDto operatorDto) {
+	public ResponseEntity<ApiResponse<OperatorDto>> operatorSignup(@ModelAttribute OperatorDto operatorDto) {
 		
-		if(operatorDto.getLicense() == null || operatorDto.getLicense().isEmpty()) {
-			return "License could not be processed";
+		if(userService.checkEmailExist(operatorDto.getUserInfo().getEmail())) {
+			return ResponseEntity
+					.status(HttpStatus.CONFLICT)
+					.body(new ApiResponse<>("Email is already registered",null));
+
+		}
+
+		if(userService.checkPhoneExist(operatorDto.getUserInfo().getPhone())) {
+			return ResponseEntity
+					.status(HttpStatus.CONFLICT)
+					.body(new ApiResponse<>("Phone is already registered",null));
 		}
 		
-		return "signup successful";
+		if(operatorDto.getLicense() == null || operatorDto.getLicense().isEmpty()) {
+			return ResponseEntity
+					.status(HttpStatus.CONFLICT)
+					.body(new ApiResponse<>("License could not be processed",null));
+		}
+		
+		Operator operator = new Operator();
+		BeanUtils.copyProperties(operatorDto, operator);
+		
+		operator = operatorService.operatorSignup(operator, operatorDto.getLicense(), operatorDto.getBanner());
+		
+		
+		BeanUtils.copyProperties(operator, operatorDto);
+		
+		return ResponseEntity.ok(new ApiResponse<>("Signup Successfull",operatorDto));
 	}
 
 }
