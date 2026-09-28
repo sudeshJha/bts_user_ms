@@ -1,9 +1,9 @@
-package com.bts.auth.repos;
+package com.bts.repos;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.bts.auth.models.User;
+import com.bts.models.User;
 
 @Repository
 public interface UserRepo extends JpaRepository<User, Long>{

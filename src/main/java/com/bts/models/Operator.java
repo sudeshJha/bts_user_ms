@@ -1,4 +1,4 @@
-package com.bts.auth.models;
+package com.bts.models;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

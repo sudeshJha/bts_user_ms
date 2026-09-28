@@ -1,13 +1,13 @@
-package com.bts.auth;
+package com.bts;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class UserMsApplication {
+public class BTSApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(UserMsApplication.class, args);
+		SpringApplication.run(BTSApplication.class, args);
 	}
 
 }

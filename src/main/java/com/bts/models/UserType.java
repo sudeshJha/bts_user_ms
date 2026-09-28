@@ -1,4 +1,4 @@
-package com.bts.auth.models;
+package com.bts.models;
 
 public enum UserType {
 	PASSENGER, OPERATOR

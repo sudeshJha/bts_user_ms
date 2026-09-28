@@ -1,4 +1,4 @@
-package com.bts.auth.models;
+package com.bts.models;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -7,32 +7,22 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name="passengers")
+@Getter
+@Setter
+@NoArgsConstructor
 public class Passenger{
-	
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long passengerId;
-	
+
 	@OneToOne
 	@JoinColumn(name="user_id")
 	private User user;
-
-	public Long getPassengerId() {
-		return passengerId;
-	}
-
-	public void setPassengerId(Long passengerId) {
-		this.passengerId = passengerId;
-	}
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
 }

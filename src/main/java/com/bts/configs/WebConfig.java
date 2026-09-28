@@ -1,4 +1,4 @@
-package com.bts.auth.configs;
+package com.bts.configs;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
