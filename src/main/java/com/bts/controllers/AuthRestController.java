@@ -96,6 +96,16 @@ public class AuthRestController {
 		Operator operator = new Operator();
 		BeanUtils.copyProperties(operatorDto, operator);
 		
+		User user = new User();
+		BeanUtils.copyProperties(operatorDto.getUserInfo(), user);
+		
+		
+		operator.setUser(user);
+		
+		System.out.println("---------------------------------");
+		System.out.println(operatorDto.getUserInfo().getEmail() + "~~~~~~~~~~~");
+		System.out.println(operator.getUser().getEmail() + "-----------");
+		
 		operator = operatorService.operatorSignup(operator, operatorDto.getLicense(), operatorDto.getBanner());
 		
 		
