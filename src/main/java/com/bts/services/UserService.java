@@ -1,5 +1,6 @@
 package com.bts.services;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -12,6 +13,8 @@ import org.springframework.stereotype.Service;
 import com.bts.models.User;
 import com.bts.models.UserType;
 import com.bts.repos.UserRepo;
+import com.bts.utils.FileUtil;
+
 
 @Service
 public class UserService {
@@ -19,22 +22,17 @@ public class UserService {
 	@Autowired
 	private UserRepo userRepo;
 	
+	@Autowired
+	private FileUtil fileUtil;
+	
 	@Value("${file.upload.directory}")
 	private String uploadPath;
 
 	public User userSignup(User user) {
 		user.setUserType(UserType.PASSENGER);
 		user = userRepo.save(user);
-		user.setPassword(null);
 		
-		String userId = user.getUserId().toString();
-		Path path = Paths.get(uploadPath + userId);
-		
-		try {
-			Files.createDirectories(path);
-		}catch(IOException exp) {
-			System.out.println("User Directory " + userId + " already exsits");
-		}
+		fileUtil.createUserDirectory(user.getUserId());
 		
 		return user;
 	}

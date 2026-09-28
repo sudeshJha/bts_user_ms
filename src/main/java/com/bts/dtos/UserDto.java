@@ -1,5 +1,7 @@
 package com.bts.dtos;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,6 +21,7 @@ public class UserDto {
 	@Pattern(regexp="^((\\+91[-.\\s]?)?\\d{10}|0\\d{3}[-.\\s]?\\d{7})$")
 	private String phone;
 
+	@JsonProperty(access=JsonProperty.Access.WRITE_ONLY)
 	@Pattern(regexp = "^[a-zA-Z0-9!@#$()_]{8,}$")
 	private String password;
 }

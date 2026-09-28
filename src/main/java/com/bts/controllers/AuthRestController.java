@@ -32,6 +32,8 @@ public class AuthRestController {
 	@PostMapping("/signup")
 	public ResponseEntity<ApiResponse<PassengerDto>> signup(@RequestBody UserDto userDto) {
 
+		System.out.println(userDto.getPassword());
+		
 		if(userService.checkEmailExist(userDto.getEmail())) {
 			return ResponseEntity
 					.status(HttpStatus.CONFLICT)
@@ -47,10 +49,10 @@ public class AuthRestController {
 
 		Passenger passenger = new Passenger();
 		User user = new User();
-
+		
 		BeanUtils.copyProperties(userDto, user);
 		passenger.setUser(user);
-
+		
 		passenger = passengerService.passengerSignup(passenger);
 
 		PassengerDto passengerDto = new PassengerDto();
