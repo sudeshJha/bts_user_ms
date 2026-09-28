@@ -72,8 +72,12 @@ public class AuthRestController {
 	@PostMapping("/operator/signup")
 	public String operatorSignup(@ModelAttribute OperatorDto operatorDto) {
 		
-		MultipartFile banner = operatorDto.getBanner();
-		MultipartFile license = operatorDto.getLicense();
+		
+		if(operatorDto.getBanner() == null || operatorDto.getBanner().isEmpty()) {
+			return "License bhej bhadwe";
+		}
+		
+		
 		
 		return "signup successful";
 	}
