@@ -72,12 +72,10 @@ public class AuthRestController {
 	@PostMapping("/operator/signup")
 	public String operatorSignup(@ModelAttribute OperatorDto operatorDto) {
 		
-		
-		if(operatorDto.getBanner() == null || operatorDto.getBanner().isEmpty()) {
-			return "License bhej bhadwe";
+		System.out.println(operatorDto.getLicense());
+		if(operatorDto.getLicense() == null || operatorDto.getLicense().isEmpty()) {
+			return "License could not be processed";
 		}
-		
-		
 		
 		return "signup successful";
 	}
