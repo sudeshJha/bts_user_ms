@@ -1,8 +1,9 @@
 package com.bts.utils;
 
+
 public class EmailTemplate {
 	
-	public String getVerificationEmailTemplate(String name, String verificationLink ) {
+	public static String getVerificationEmailTemplate(String name, String verificationLink ) {
 		
 		String htmlContent = """
 			    <!DOCTYPE html>
