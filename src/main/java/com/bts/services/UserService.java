@@ -29,7 +29,6 @@ public class UserService {
 	private String uploadPath;
 
 	public User userSignup(User user) {
-		user.setUserType(UserType.PASSENGER);
 		user = userRepo.save(user);
 		
 		fileUtil.createUserDirectory(user.getUserId());

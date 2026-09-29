@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.bts.models.Operator;
 import com.bts.models.User;
+import com.bts.models.UserType;
 import com.bts.repos.OperatorRepo;
 import com.bts.utils.FileUtil;
 
@@ -29,6 +30,7 @@ public class OperatorService {
 	
 	public Operator operatorSignup(Operator operator, MultipartFile license, MultipartFile banner) {
 
+		operator.getUser().setUserType(UserType.OPERATOR);
 		User user = userService.userSignup(operator.getUser());
 		operator.setUser(user);
 		

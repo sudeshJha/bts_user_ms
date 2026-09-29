@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.bts.models.Passenger;
 import com.bts.models.User;
+import com.bts.models.UserType;
 import com.bts.repos.PassengerRepo;
 
 
@@ -19,6 +20,7 @@ public class PassengerService {
 
 	public Passenger passengerSignup(Passenger passenger) {
 
+		passenger.getUser().setUserType(UserType.PASSENGER);
 		User user = userService.userSignup(passenger.getUser());
 		passenger.setUser(user);
 		passenger = passengerRepo.save(passenger);
