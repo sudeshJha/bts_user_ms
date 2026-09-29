@@ -8,17 +8,22 @@ import java.nio.file.Paths;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.bts.models.User;
 import com.bts.models.UserType;
 import com.bts.repos.UserRepo;
 import com.bts.utils.FileUtil;
+import com.bts.utils.PasswordUtil;
 
 
 @Service
 public class UserService {
-
+	
+	@Autowired
+	private PasswordUtil passwordUtil;
+	
 	@Autowired
 	private UserRepo userRepo;
 	
@@ -29,6 +34,9 @@ public class UserService {
 	private String uploadPath;
 
 	public User userSignup(User user) {
+		String encryptedPassword = passwordUtil.encode(user.getPassword());
+		user.setPassword(encryptedPassword);
+		
 		user = userRepo.save(user);
 		
 		fileUtil.createUserDirectory(user.getUserId());
