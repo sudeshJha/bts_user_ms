@@ -20,11 +20,10 @@ spring:
     password: wnuy phst tkfg koxy
     properties:
       mail:
-        smth:
+        smtp:
           auth: true
           starttls:
             enable: true
-      
 
 server:
   port: 9090

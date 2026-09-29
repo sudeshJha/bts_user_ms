@@ -58,7 +58,7 @@ public class User {
 
 	private Boolean phoneVerfified;
 
-	private String verification_code;
+	private String verificationCode;
 
 	@CreationTimestamp
 	private LocalDateTime createdAt;

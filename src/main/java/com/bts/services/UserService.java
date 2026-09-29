@@ -16,10 +16,17 @@ import com.bts.models.UserType;
 import com.bts.repos.UserRepo;
 import com.bts.utils.FileUtil;
 import com.bts.utils.PasswordUtil;
+import com.bts.utils.RandomUUID;
 
 
 @Service
 public class UserService {
+	
+	@Value("${api.url.path}")
+	private String apiLink;
+	
+	@Autowired
+	private EmailService emailService; 
 	
 	@Autowired
 	private PasswordUtil passwordUtil;
@@ -34,11 +41,23 @@ public class UserService {
 	private String uploadPath;
 
 	public User userSignup(User user) {
+//		encrypting password
 		String encryptedPassword = passwordUtil.encode(user.getPassword());
 		user.setPassword(encryptedPassword);
 		
+//		generate verification link for user
+		String verificationCode= RandomUUID.get();
+		user.setVerificationCode(verificationCode);
+		String verificationLink = apiLink + "verify?email=" + user.getEmail() + "&verificationCode=" + verificationCode;
+		
+//		send email to the user
+		emailService.sendVerificationMail(user.getName(), user.getEmail(), verificationLink);
+ 		
+//		save user in database
 		user = userRepo.save(user);
 		
+		
+//		creating user directory
 		fileUtil.createUserDirectory(user.getUserId());
 		
 		return user;
