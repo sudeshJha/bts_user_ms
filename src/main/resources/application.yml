@@ -1,6 +1,7 @@
 spring:
   application:
     name: Bts
+
   datasource:
     url: jdbc:mysql://localhost:3306/btsdb
     username: root
@@ -11,6 +12,20 @@ spring:
     hibernate:
       ddl-auto: create
     show-sql: true
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: sudeshjha2005@gmail.com
+    password: wnuy phst tkfg koxy
+    properties:
+      mail:
+        smth:
+          auth: true
+          starttls:
+            enable: true
+      
+
 server:
   port: 9090
   servlet:
@@ -18,4 +33,9 @@ server:
 file:
   upload:
     directory: uploads
+
+api:
+  url:
+    path: https://localhost:9090/api/
+
 
