@@ -33,11 +33,6 @@ public class AuthRestController {
 
 	@Autowired
 	private  UserService userService;
-	
-	@GetMapping("/test")
-	public ResponseEntity<String>test(){
-		return ResponseEntity.ok("Test successful");
-	}
 
 	@PostMapping("/signup")
 	public ResponseEntity<ApiResponse<PassengerDto>> signup(@RequestBody UserDto userDto) {

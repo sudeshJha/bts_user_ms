@@ -52,19 +52,19 @@ public class EmailTemplate {
 			            </div>
 			            
 			            <div class="main-content">
-			                <h2>Hello username,</h2>
+			                <h2>Hello {username},</h2>
 			                <p>Welcome to the Nimbus, India's most advanced bus service platform. We are thrilled to have you on board.</p>
 			                <p>Please verify your email address by clicking on the link below.</p>
 			                
 			                <div style="text-align: center;">
-			                    <a href="http://localhost:3000/verify" class="action-btn">Verify My Account</a>
+			                    <a href="{verificationLink}" class="action-btn">Verify My Account</a>
 			                </div>
 			                
 			                <p style="margin-top: 20px; font-size: 14px; color: #6b7280;">
 			                    If you didn't request this email, you can safely ignore it. Your account will not be activated until you verify.
 			                </p>
 			                <p style="margin-bottom: 0; margin-top: 30px;">
-			                    Keep coding,<br><strong>The BTS Team</strong>
+			                    From team nimbus.
 			                </p>
 			            </div>
 			            

@@ -35,6 +35,6 @@ file:
 
 api:
   url:
-    path: https://localhost:9090/api/
+    path: https://localhost:9090/api
 
 
