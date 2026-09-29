@@ -49,7 +49,7 @@ public class UserService {
 //		generate verification link for user
 		String verificationCode= RandomUUID.get();
 		user.setVerificationCode(verificationCode);
-		String verificationLink = apiLink + "/verify_email?email=" + user.getEmail() + "&verificationCode=" + verificationCode;
+		String verificationLink = apiLink + "/verify_user?email=" + user.getEmail() + "&verificationCode=" + verificationCode;
 		
 //		send email to the user
 		emailService.sendVerificationMail(user.getName(), user.getEmail(), verificationLink);
@@ -72,15 +72,19 @@ public class UserService {
 		return userRepo.existsByPhone(phone);
 	}
 	
-	public boolean verifyUserEmail(String email, String verificationCode) {
+	public boolean verifyUser(String email, String verificationCode) {
 		User user = userRepo.getByEmail(email);
 		
-		if(user.getVerificationCode() == verificationCode) {
+		if(user.getVerificationCode().equals(verificationCode)) {
 			user.setVerificationCode(null);
 			user.setStatus(Status.ACTIVE);
 			userRepo.save(user);
 			return true;
 		}else {
+			System.out.println(user.getEmail());
+			System.out.println(user.getVerificationCode());
+			System.out.println(verificationCode);
+			System.out.println("Cannot verify the user");
 			return false;
 		}
 	}

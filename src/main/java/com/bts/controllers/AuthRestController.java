@@ -1,5 +1,7 @@
 package com.bts.controllers;
 
+import java.net.URI;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -110,11 +112,20 @@ public class AuthRestController {
 		return ResponseEntity.ok(new ApiResponse<>("Signup Successfull",operatorDto));
 	}
 	
-	@GetMapping("/verify_email")
-	public ResponseEntity<ApiResponse<Boolean>> verifyEmail(@RequestParam String verificationCode, 	@RequestParam String email){
+	@GetMapping("/verify_user")
+	public ResponseEntity<Void> verifyEmail(@RequestParam String verificationCode, 	@RequestParam String email){
 		
+		boolean verification = userService.verifyUser(email, verificationCode);
 		
-		return null;
+		if(!verification) {
+			return ResponseEntity.status(HttpStatus.FOUND)
+                    .location(URI.create("http://localhost:5173/signup"))
+                    .build();
+		}
+		
+		return ResponseEntity.status(HttpStatus.FOUND)
+                .location(URI.create("http://localhost:5173/home"))
+                .build();
 	}
 
 }

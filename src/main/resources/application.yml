@@ -10,7 +10,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     show-sql: true
 
   mail:
@@ -35,6 +35,6 @@ file:
 
 api:
   url:
-    path: https://localhost:9090/api
+    path: http://localhost:9090/api
 
 
