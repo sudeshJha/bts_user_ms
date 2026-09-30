@@ -36,6 +36,7 @@ public class AuthRestController {
 
 	@Autowired
 	private  UserService userService;
+	
 
 	@PostMapping("/signup")
 	public ResponseEntity<ApiResponse<PassengerDto>> signup(@RequestBody UserDto userDto) {
@@ -126,6 +127,27 @@ public class AuthRestController {
 		return ResponseEntity.status(HttpStatus.FOUND)
                 .location(URI.create("http://localhost:5173/home"))
                 .build();
+	}
+	
+	public ResponseEntity<ApiResponse<Object>> login(@RequestBody UserDto userDto){
+		try {
+            AuthResponse authData = authService.login(loginRequest);
+            
+            return ResponseEntity.ok(new ApiResponse<>("Login successful", true, authData));
+            
+        } catch (UnverifiedAccountException e) {
+            // Returns 403 status with "Please verify your account"
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body(new ApiResponse<>(e.getMessage(), false, null));
+                    
+        } catch (BadCredentialsException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(new ApiResponse<>("Invalid email or password", false, null));
+                    
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ApiResponse<>(e.getMessage(), false, null));
+        }
 	}
 
 }
