@@ -141,6 +141,7 @@ public class AuthRestController {
                 .build();
 	}
 	
+	@PostMapping("/login")
 	public ResponseEntity<ApiResponse> login(@RequestBody UserDto userDto){
 		User user = userService.getUserByEmail(userDto.getEmail());
 
