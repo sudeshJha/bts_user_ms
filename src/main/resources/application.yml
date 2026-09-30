@@ -37,4 +37,8 @@ api:
   url:
     path: http://localhost:9090/api
 
+jwt:
+  secret:
+    key: 39558576A2627D621834747593E65263894955F7812763267B67274959
+
 

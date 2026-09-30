@@ -6,6 +6,9 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,12 +18,15 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.bts.dtos.ApiResponse;
+import com.bts.dtos.AuthResponse;
 import com.bts.dtos.OperatorDto;
 import com.bts.dtos.PassengerDto;
 import com.bts.dtos.UserDto;
 import com.bts.models.Operator;
 import com.bts.models.Passenger;
+import com.bts.models.Status;
 import com.bts.models.User;
+import com.bts.security.JwtService;
 import com.bts.services.OperatorService;
 import com.bts.services.PassengerService;
 import com.bts.services.UserService;
@@ -36,6 +42,12 @@ public class AuthRestController {
 
 	@Autowired
 	private  UserService userService;
+	
+	@Autowired
+	private AuthenticationManager authenticationManager;
+	
+	@Autowired
+	private JwtService jwtService;
 	
 
 	@PostMapping("/signup")
@@ -129,26 +141,31 @@ public class AuthRestController {
                 .build();
 	}
 	
-	public ResponseEntity<ApiResponse<Object>> login(@RequestBody UserDto userDto){
-		return null;
-//		try {
-//            AuthResponse authData = authService.login(loginRequest);
-//            
-//            return ResponseEntity.ok(new ApiResponse<>("Login successful", true, authData));
-//            
-//        } catch (UnverifiedAccountException e) {
-//            // Returns 403 status with "Please verify your account"
-//            return ResponseEntity.status(HttpStatus.FORBIDDEN)
-//                    .body(new ApiResponse<>(e.getMessage(), false, null));
-//                    
-//        } catch (BadCredentialsException e) {
-//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-//                    .body(new ApiResponse<>("Invalid email or password", false, null));
-//                    
-//        } catch (Exception e) {
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-//                    .body(new ApiResponse<>(e.getMessage(), false, null));
-//        }
+	public ResponseEntity<ApiResponse> login(@RequestBody UserDto userDto){
+		User user = userService.getUserByEmail(userDto.getEmail());
+
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(new ApiResponse<>("This email is not registered.")); 
+        }
+
+        if (user.getStatus() == Status.INACTIVE) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body(new ApiResponse<>("Please verify your account to login")); 
+        }
+
+        try {
+            authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(userDto.getEmail(), userDto.getPassword())
+            );
+        } catch (BadCredentialsException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(new ApiResponse<>("Either email or password is invalid"));
+        }
+
+        String token = jwtService.generateToken(userDto.getEmail());
+        System.out.println(token);
+        return ResponseEntity.ok(new ApiResponse<>("Login successful.",new AuthResponse(token)));
 	}
 
 }

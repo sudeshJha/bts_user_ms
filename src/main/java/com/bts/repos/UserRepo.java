@@ -1,5 +1,7 @@
 package com.bts.repos;
 
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -12,4 +14,6 @@ public interface UserRepo extends JpaRepository<User, Long>{
 	boolean existsByPhone(String phone);
 	
 	User getByEmail(String email);
+	
+	Optional<User> findByEmail(String email);
 }

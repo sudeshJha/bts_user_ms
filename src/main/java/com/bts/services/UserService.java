@@ -5,9 +5,12 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Collections;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -88,4 +91,20 @@ public class UserService {
 			return false;
 		}
 	}
+	
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        
+        User user = userRepo.findByEmail(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Email is not registered"));
+
+        return new org.springframework.security.core.userdetails.User(
+                user.getEmail(),           
+                user.getPassword(),       
+                Collections.emptyList()
+        );
+    }
+    
+    public User getUserByEmail(String email) {
+    	return userRepo.getByEmail(email);
+    }
 }

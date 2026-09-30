@@ -12,5 +12,9 @@ import lombok.Setter;
 public class ApiResponse<T> {
 	private String message;
 	private T response;
+	
+	public ApiResponse(String message) {
+		this.message = message;
+	}
 
 }
