@@ -36,7 +36,7 @@ public class SecurityConfig {
 	    .csrf(csrf -> csrf.disable()) 
 	    .formLogin(form -> form.disable()) // Ye line is login page ko hata degi
 	    .authorizeHttpRequests(auth -> auth
-	        .requestMatchers("/login","/signup","/operator/signup","/verify_user").permitAll()
+	        .requestMatchers("/login","/signup","/operator/signup","/verify_user","/uploads/**").permitAll()
 	        .anyRequest().authenticated()
 	    )
 	    .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
