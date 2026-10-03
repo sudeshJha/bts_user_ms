@@ -56,7 +56,7 @@ public class User {
 
 	private String pic;
 
-	private Boolean phoneVerfified;
+	private Boolean phoneVerified;
 
 	private String verificationCode;
 

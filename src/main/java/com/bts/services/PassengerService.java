@@ -17,6 +17,10 @@ public class PassengerService {
 
 	@Autowired
 	private PassengerRepo passengerRepo;
+	
+	public Passenger getPassengerByUserId(Long userId) {
+		return passengerRepo.findByUser_UserId(userId);
+	}
 
 	public Passenger passengerSignup(Passenger passenger) {
 

@@ -1,30 +1,27 @@
 package com.bts.dtos;
 
-import org.springframework.web.multipart.MultipartFile;
+import com.bts.models.OperatorVerificationStatus;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
+import jakarta.persistence.Column;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Setter
 @Getter
+@Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class OperatorDto {
-
-	private UserAuthDto userInfo;
+	
+	private UserDto userInfo;
 	private String address;
 	private Float seaterBasePrice;
 	private Float sleeperBasePrice;
 	private String licenseUrl;
 	private String bannerUrl;
-	
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-	private MultipartFile license;
-	
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-	private MultipartFile banner;
-
+	private OperatorVerificationStatus verificationStatus;
 }
 

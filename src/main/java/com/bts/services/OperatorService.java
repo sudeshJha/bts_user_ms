@@ -49,5 +49,9 @@ public class OperatorService {
 		operator = operatorRepo.save(operator);
 
 		return operator;
-	} 
+	}
+	
+	public Operator getOperatorByUserId(Long userId) {
+		return operatorRepo.findByUser_UserId(userId);
+	}
 }

@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.bts.dtos.ApiResponse;
 import com.bts.dtos.AuthResponse;
+import com.bts.dtos.OperatorAuthDto;
 import com.bts.dtos.OperatorDto;
 import com.bts.dtos.PassengerDto;
 import com.bts.dtos.UserAuthDto;
@@ -28,6 +29,7 @@ import com.bts.models.Operator;
 import com.bts.models.Passenger;
 import com.bts.models.Status;
 import com.bts.models.User;
+import com.bts.models.UserType;
 import com.bts.security.JwtService;
 import com.bts.services.OperatorService;
 import com.bts.services.PassengerService;
@@ -57,18 +59,36 @@ public class AuthRestController {
 	
 	@GetMapping("/get_user")
 	public ResponseEntity<ApiResponse<?>> getCurrentUser() {
-	    // Token se directly logged-in user nikal lo
-	    String email = SecurityContextHolder.getContext().getAuthentication().getName();
-	    User user = userService.getUserByEmail(email);
 	    
 	    User user = authUtil.getCurrentUser();
-//	    return ResponseEntity.ok(user);
-	    return null;
+	    
+	    UserType userType = user.getUserType();
+	    
+	    if(userType == UserType.OPERATOR) {
+	    	Operator operator = operatorService.getOperatorByUserId(user.getUserId());
+	    	OperatorDto operatorDto = new OperatorDto();
+	    	BeanUtils.copyProperties(user, operatorDto.getUserInfo());
+	    	BeanUtils.copyProperties(operator, operatorDto);
+	    	
+	    	return ResponseEntity.ok(new ApiResponse<OperatorDto>("Succesfully fetched User", operatorDto));
+	    }
+	    else if(userType == UserType.PASSENGER) {
+	    	Passenger passenger = passengerService.getPassengerByUserId(user.getUserId());
+	    	PassengerDto passengerDto = new PassengerDto();
+	    	BeanUtils.copyProperties(user, passengerDto.getUserInfo());
+	    	BeanUtils.copyProperties(passenger, passengerDto);
+	    	
+	    	return ResponseEntity.ok(new ApiResponse<PassengerDto>("Succesfully fetched User", passengerDto));
+	    }
+	    else {
+	    	return ResponseEntity.status(HttpStatus.CONFLICT)
+					.body(new ApiResponse<>("Could not get User"));
+	    }
 	}
 	
 
 	@PostMapping("/signup")
-	public ResponseEntity<ApiResponse<PassengerDto>> signup(@RequestBody UserAuthDto userDto) {
+	public ResponseEntity<ApiResponse<?>> signup(@RequestBody UserAuthDto userDto) {
 		
 		if(userService.checkEmailExist(userDto.getEmail())) {
 			return ResponseEntity
@@ -91,21 +111,13 @@ public class AuthRestController {
 		
 		passenger = passengerService.passengerSignup(passenger);
 
-		PassengerDto passengerDto = new PassengerDto();
-		UserAuthDto userInfo = new UserAuthDto();
 
-		BeanUtils.copyProperties(passenger.getUser(),userInfo);
-
-		passengerDto.setPassengerId(passenger.getPassengerId());
-		passengerDto.setUserInfo(userInfo);
-
-
-		return ResponseEntity.ok(new ApiResponse<>("Signup Successfull",passengerDto));
+		return ResponseEntity.ok(new ApiResponse<>("Signup Successfull"));
 
 	}
 	
 	@PostMapping("/operator/signup")
-	public ResponseEntity<ApiResponse<OperatorDto>> operatorSignup(@ModelAttribute OperatorDto operatorDto) {
+	public ResponseEntity<ApiResponse<?>> operatorSignup(@ModelAttribute OperatorAuthDto operatorDto) {
 		
 		if(userService.checkEmailExist(operatorDto.getUserInfo().getEmail())) {
 			return ResponseEntity
@@ -136,10 +148,8 @@ public class AuthRestController {
 		operator.setUser(user);
 		operator = operatorService.operatorSignup(operator, operatorDto.getLicense(), operatorDto.getBanner());
 		
-		
-		BeanUtils.copyProperties(operator, operatorDto);
-		
-		return ResponseEntity.ok(new ApiResponse<>("Signup Successfull",operatorDto));
+				
+		return ResponseEntity.ok(new ApiResponse<>("Signup Successfull"));
 	}
 	
 	@GetMapping("/verify_user")

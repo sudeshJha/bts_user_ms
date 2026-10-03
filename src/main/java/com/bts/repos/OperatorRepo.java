@@ -5,5 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.bts.models.Operator;
 
 public interface OperatorRepo extends JpaRepository<Operator, Long>{
-
+	
+	public Operator findByUser_UserId(Long userId);
 }
