@@ -62,6 +62,11 @@ public class AuthRestController {
 	    
 	    User user = authUtil.getCurrentUser();
 	    
+	    if(user == null) {
+	    	return ResponseEntity.status(HttpStatus.CONFLICT)
+					.body(new ApiResponse<>("The user is not registered."));
+	    }
+	    
 	    UserType userType = user.getUserType();
 	    
 	    if(userType == UserType.OPERATOR) {

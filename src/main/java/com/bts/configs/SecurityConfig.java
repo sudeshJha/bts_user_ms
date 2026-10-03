@@ -1,5 +1,6 @@
 package com.bts.configs;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -11,10 +12,16 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import com.bts.security.JwtAuthenticationFilter;
 
 
 @Configuration
 public class SecurityConfig {
+	
+	@Autowired
+	private JwtAuthenticationFilter jwtFilter;
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
@@ -22,8 +29,10 @@ public class SecurityConfig {
 	    .csrf(csrf -> csrf.disable()) 
 	    .formLogin(form -> form.disable()) // Ye line is login page ko hata degi
 	    .authorizeHttpRequests(auth -> auth
-	        .requestMatchers("/**").permitAll() // Abhi ke liye sab open karne ke liye
-	    );
+	        .requestMatchers("/login","/signup","/operator/signup","/verify_user").permitAll()
+	        .anyRequest().authenticated()
+	    )
+	    .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 		
 		return http.build();
 	}
