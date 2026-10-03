@@ -13,7 +13,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class OperatorDto {
 
-	private UserDto userInfo;
+	private UserAuthDto userInfo;
 	private String address;
 	private Float seaterBasePrice;
 	private Float sleeperBasePrice;

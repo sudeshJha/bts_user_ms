@@ -9,7 +9,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class PassengerDto {
 
-	private Long passengerId;
-	private  UserDto userInfo;
+	private  UserAuthDto userInfo;
 
 }

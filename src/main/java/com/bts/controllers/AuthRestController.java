@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,6 +22,7 @@ import com.bts.dtos.ApiResponse;
 import com.bts.dtos.AuthResponse;
 import com.bts.dtos.OperatorDto;
 import com.bts.dtos.PassengerDto;
+import com.bts.dtos.UserAuthDto;
 import com.bts.dtos.UserDto;
 import com.bts.models.Operator;
 import com.bts.models.Passenger;
@@ -30,6 +32,7 @@ import com.bts.security.JwtService;
 import com.bts.services.OperatorService;
 import com.bts.services.PassengerService;
 import com.bts.services.UserService;
+import com.bts.utils.AuthUtil;
 
 @RestController
 public class AuthRestController {
@@ -49,9 +52,23 @@ public class AuthRestController {
 	@Autowired
 	private JwtService jwtService;
 	
+	@Autowired 
+	private AuthUtil authUtil;
+	
+	@GetMapping("/get_user")
+	public ResponseEntity<ApiResponse<?>> getCurrentUser() {
+	    // Token se directly logged-in user nikal lo
+	    String email = SecurityContextHolder.getContext().getAuthentication().getName();
+	    User user = userService.getUserByEmail(email);
+	    
+	    User user = authUtil.getCurrentUser();
+//	    return ResponseEntity.ok(user);
+	    return null;
+	}
+	
 
 	@PostMapping("/signup")
-	public ResponseEntity<ApiResponse<PassengerDto>> signup(@RequestBody UserDto userDto) {
+	public ResponseEntity<ApiResponse<PassengerDto>> signup(@RequestBody UserAuthDto userDto) {
 		
 		if(userService.checkEmailExist(userDto.getEmail())) {
 			return ResponseEntity
@@ -75,7 +92,7 @@ public class AuthRestController {
 		passenger = passengerService.passengerSignup(passenger);
 
 		PassengerDto passengerDto = new PassengerDto();
-		UserDto userInfo = new UserDto();
+		UserAuthDto userInfo = new UserAuthDto();
 
 		BeanUtils.copyProperties(passenger.getUser(),userInfo);
 
@@ -142,7 +159,7 @@ public class AuthRestController {
 	}
 	
 	@PostMapping("/login")
-	public ResponseEntity<ApiResponse> login(@RequestBody UserDto userDto){
+	public ResponseEntity<ApiResponse<?>> login(@RequestBody UserAuthDto userDto){
 		User user = userService.getUserByEmail(userDto.getEmail());
 
         if (user == null) {
