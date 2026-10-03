@@ -20,6 +20,8 @@ import io.jsonwebtoken.security.Keys;
 public class JwtService {
 	@Value("${jwt.secret.key}")
 	public String SECRET;
+	
+	private Integer expirationTime = 1000*60*60*24;
 
 	public String extractUsername(String token) {
 		return extractClaim(token, Claims::getSubject);
@@ -65,7 +67,7 @@ public class JwtService {
 				.setClaims(claims)
 				.setSubject(username)
 				.setIssuedAt(new Date(System.currentTimeMillis()))
-				.setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 5))
+				.setExpiration(new Date(System.currentTimeMillis() + expirationTime))
 				.signWith(getSignKey(), SignatureAlgorithm.HS256).compact();
 	}
 	

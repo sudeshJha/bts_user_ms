@@ -72,16 +72,20 @@ public class AuthRestController {
 	    if(userType == UserType.OPERATOR) {
 	    	Operator operator = operatorService.getOperatorByUserId(user.getUserId());
 	    	OperatorDto operatorDto = new OperatorDto();
-	    	BeanUtils.copyProperties(user, operatorDto.getUserInfo());
+	    	UserDto userDto = new UserDto();
+	    	BeanUtils.copyProperties(user, userDto);
 	    	BeanUtils.copyProperties(operator, operatorDto);
+	    	operatorDto.setUserInfo(userDto);
 	    	
 	    	return ResponseEntity.ok(new ApiResponse<OperatorDto>("Succesfully fetched User", operatorDto));
 	    }
 	    else if(userType == UserType.PASSENGER) {
 	    	Passenger passenger = passengerService.getPassengerByUserId(user.getUserId());
 	    	PassengerDto passengerDto = new PassengerDto();
-	    	BeanUtils.copyProperties(user, passengerDto.getUserInfo());
+	    	UserDto userDto = new UserDto();
+	    	BeanUtils.copyProperties(user, userDto);
 	    	BeanUtils.copyProperties(passenger, passengerDto);
+	    	passengerDto.setUserInfo(userDto);
 	    	
 	    	return ResponseEntity.ok(new ApiResponse<PassengerDto>("Succesfully fetched User", passengerDto));
 	    }

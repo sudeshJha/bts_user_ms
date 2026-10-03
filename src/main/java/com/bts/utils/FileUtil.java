@@ -18,7 +18,7 @@ public class FileUtil {
 
 	public void createUserDirectory(Long userId) {
 		
-		Path path = Paths.get(uploadDirectory + File.separator +userId.toString());
+		Path path = Paths.get(uploadDirectory + "/" + userId.toString());
 		
 		try {
 			Files.createDirectories(path);
@@ -32,7 +32,7 @@ public class FileUtil {
 	public void fileUpload(String uploadPath, MultipartFile file) {
 		
 		String fileName = file.getOriginalFilename();
-		Path path = Paths.get(uploadPath + File.separator + fileName);
+		Path path = Paths.get(uploadPath + "/" + fileName);
 		
 		try {
 			
