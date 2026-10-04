@@ -34,7 +34,7 @@ public class SecurityConfig {
 		http
 		.cors(Customizer.withDefaults())
 	    .csrf(csrf -> csrf.disable()) 
-	    .formLogin(form -> form.disable()) // Ye line is login page ko hata degi
+	    .formLogin(form -> form.disable()) 
 	    .authorizeHttpRequests(auth -> auth
 	        .requestMatchers("/login","/signup","/operator/signup","/verify_user","/uploads/**").permitAll()
 	        .anyRequest().authenticated()
@@ -47,13 +47,12 @@ public class SecurityConfig {
 	@Bean
 	public AuthenticationProvider  authenticationProvider(UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
 	    DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider(userDetailsService);
-	    authProvider.setPasswordEncoder(passwordEncoder);       // Aapka BCrypt yahan jud jayega
+	    authProvider.setPasswordEncoder(passwordEncoder);       
 	    return authProvider;
 	}
 
 	@Bean
 	public AuthenticationManager authenticationManager(AuthenticationProvider authenticationProvider) {
-	    // Yeh direct ProviderManager return karega jisme koi loop/circular dependency nahi hoti
 	    return new ProviderManager(authenticationProvider);
 	}
 	
