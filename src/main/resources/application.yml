@@ -25,6 +25,13 @@ spring:
           starttls:
             enable: true
 
+  data:
+    redis:
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT}
+      username: ${REDIS_USERNAME}
+      password: ${REDIS_PASSWORD}
+
 server:
   port: 9090
   servlet:
