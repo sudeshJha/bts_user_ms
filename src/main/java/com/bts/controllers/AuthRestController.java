@@ -54,46 +54,8 @@ public class AuthRestController {
 	@Autowired
 	private JwtService jwtService;
 	
-	@Autowired 
-	private AuthUtil authUtil;
 	
-	@GetMapping("/get_user")
-	public ResponseEntity<ApiResponse<?>> getCurrentUser() {
-	    
-	    User user = authUtil.getCurrentUser();
-	    
-	    if(user == null) {
-	    	return ResponseEntity.status(HttpStatus.CONFLICT)
-					.body(new ApiResponse<>("The user is not registered."));
-	    }
-	    
-	    UserType userType = user.getUserType();
-	    
-	    if(userType == UserType.OPERATOR) {
-	    	Operator operator = operatorService.getOperatorByUserId(user.getUserId());
-	    	OperatorDto operatorDto = new OperatorDto();
-	    	UserDto userDto = new UserDto();
-	    	BeanUtils.copyProperties(user, userDto);
-	    	BeanUtils.copyProperties(operator, operatorDto);
-	    	operatorDto.setUserInfo(userDto);
-	    	
-	    	return ResponseEntity.ok(new ApiResponse<OperatorDto>("Succesfully fetched User", operatorDto));
-	    }
-	    else if(userType == UserType.PASSENGER) {
-	    	Passenger passenger = passengerService.getPassengerByUserId(user.getUserId());
-	    	PassengerDto passengerDto = new PassengerDto();
-	    	UserDto userDto = new UserDto();
-	    	BeanUtils.copyProperties(user, userDto);
-	    	BeanUtils.copyProperties(passenger, passengerDto);
-	    	passengerDto.setUserInfo(userDto);
-	    	
-	    	return ResponseEntity.ok(new ApiResponse<PassengerDto>("Succesfully fetched User", passengerDto));
-	    }
-	    else {
-	    	return ResponseEntity.status(HttpStatus.CONFLICT)
-					.body(new ApiResponse<>("Could not get User"));
-	    }
-	}
+	
 	
 
 	@PostMapping("/signup")

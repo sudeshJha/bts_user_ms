@@ -31,14 +31,15 @@ public class RouteMidCity {
 	@Column(nullable=false)
 	private Integer distanceFromSource;
 	
+	@Column(nullable=false)
+	private Integer timeFromSource;
+	
 	@ManyToOne
 	@JoinColumn(name="city_id")
-	@Column(nullable=false)
 	private City city;
 	
 	@ManyToOne
 	@JoinColumn(name="route_id")
-	@Column(nullable=false)
 	private Route route;
 }
 

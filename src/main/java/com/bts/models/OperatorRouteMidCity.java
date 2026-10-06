@@ -1,6 +1,7 @@
 package com.bts.models;
 
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -25,6 +26,9 @@ public class OperatorRouteMidCity {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long operatorRouteMidCityId;
 	
+	@Column(nullable=false)
+	private Integer haltTime;
+	
 	@ManyToOne
 	@JoinColumn(name="operator_route_id")
 	private OperatorRoute operatorRoute;
@@ -32,5 +36,6 @@ public class OperatorRouteMidCity {
 	@ManyToOne
 	@JoinColumn(name="route_mid_city_id")
 	private RouteMidCity routeMidCity;
+	
 
 }

@@ -50,13 +50,11 @@ public class Route {
 	private LocalDateTime updatedAt;
 	
 	@ManyToOne
-	@JoinColumn(name="city_id")
-	@Column(nullable=false)
+	@JoinColumn(name="source_city_id")
 	private City sourceCity;
 	
 	@ManyToOne
-	@JoinColumn(name="city_id")
-	@Column(nullable=false)
+	@JoinColumn(name="destination_city_id")
 	private City destinationCity;
 	
 	@OneToMany(mappedBy="route")
@@ -64,8 +62,4 @@ public class Route {
 	
 	@OneToMany(mappedBy="route")
 	private List<RouteMidCity> midCities;
-	
-	
-	
-
 }

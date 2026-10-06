@@ -30,13 +30,12 @@ public class OperatorRoute {
 	
 	@ManyToOne
 	@JoinColumn(name="operator_id")
-	@Column(nullable=false)
 	private Operator operator;
 	
 	@ManyToOne
 	@JoinColumn(name="route_id")
 	private Route route;
-	
+
 	@OneToMany(mappedBy="operatorRoute")
 	private List<OperatorRouteMidCity> operatorRouteMidCities;
 	
