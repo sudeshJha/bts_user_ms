@@ -1,4 +1,4 @@
-package com.bts.controllers;
+package com.bts.restcontrollers;
 
 import java.net.URI;
 
@@ -53,10 +53,6 @@ public class AuthRestController {
 	
 	@Autowired
 	private JwtService jwtService;
-	
-	
-	
-	
 
 	@PostMapping("/signup")
 	public ResponseEntity<ApiResponse<?>> signup(@RequestBody UserAuthDto userDto) {

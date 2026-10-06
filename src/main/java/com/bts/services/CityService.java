@@ -1,5 +1,20 @@
 package com.bts.services;
 
-public class CityService {
+import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.bts.models.City;
+import com.bts.repos.CityRepo;
+
+@Service
+public class CityService {
+	
+	@Autowired
+	private CityRepo cityRepo;
+	
+	public List<City> getAllStates(){
+		return cityRepo.findAll();
+	}
 }
