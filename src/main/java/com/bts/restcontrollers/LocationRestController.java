@@ -1,6 +1,8 @@
 package com.bts.restcontrollers;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.beans.BeanUtils;
@@ -39,6 +41,7 @@ public class LocationRestController {
 			citiesDto.add(cityDto);
 		}
 		
+		Collections.sort(citiesDto, Comparator.comparing(CityDto::getName, String.CASE_INSENSITIVE_ORDER));
 		
 		return new ApiResponse<>("Successfully fetched cities.",citiesDto);	
 	}
@@ -55,6 +58,8 @@ public class LocationRestController {
 			BeanUtils.copyProperties(state, stateDto);
 			statesDto.add(stateDto);
 		}
+		
+		Collections.sort(statesDto, Comparator.comparing(StateDto::getName, String.CASE_INSENSITIVE_ORDER));
 		
 		
 		return new ApiResponse<>("Successfully fetched.",statesDto);	

@@ -11,5 +11,5 @@ import lombok.Setter;
 @AllArgsConstructor
 public class StateDto {
 	private Long stateId;
-	private Long name;
+	private String name;
 }
