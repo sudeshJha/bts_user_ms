@@ -27,26 +27,36 @@ public class LocationRestController {
 	private StateService stateService;
 
 	@GetMapping("/cities")
-	public ResponseEntity<?> getAllCities() {
+	public ApiResponse<?> getAllCities() {
 		
 		List<City> cities = cityService.getAllCities();
 		
 		List<CityDto> citiesDto = new ArrayList<CityDto>();
 		
-		BeanUtils.copyProperties(cities, citiesDto);
+		for(City city : cities) {
+			CityDto cityDto = new CityDto();
+			BeanUtils.copyProperties(city, cityDto);
+			citiesDto.add(cityDto);
+		}
 		
-		return ResponseEntity.ok(citiesDto);	
+		
+		return new ApiResponse<>("Successfully fetched cities.",citiesDto);	
 	}
 	
 	@GetMapping("/states")
-	public ResponseEntity<?> getAllStates() {
+	public ApiResponse<?> getAllStates() {
 		
 		List<State> states = stateService.getAllStates();
 		
 		List<StateDto> statesDto = new ArrayList<StateDto>();
 		
-		BeanUtils.copyProperties(states, statesDto);
+		for(State state : states) {
+			StateDto stateDto = new StateDto();
+			BeanUtils.copyProperties(state, stateDto);
+			statesDto.add(stateDto);
+		}
 		
-		return ResponseEntity.ok(statesDto);	
+		
+		return new ApiResponse<>("Successfully fetched.",statesDto);	
 	}
 }
