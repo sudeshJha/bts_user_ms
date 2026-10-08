@@ -38,8 +38,4 @@ public class OperatorRoute {
 
 	@OneToMany(mappedBy="operatorRoute")
 	private List<OperatorRouteMidCity> operatorRouteMidCities;
-	
-	
-	
-	
 }
