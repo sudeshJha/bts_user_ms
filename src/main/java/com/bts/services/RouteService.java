@@ -14,7 +14,8 @@ public class RouteService {
 	@Autowired
 	private RouteRepo routeRepo;
 	
-	public List<Route> getRoutesBySourceAndDestinationCity(String sourceCity, String destinationCity){
-		return routeRepo.findBySourceCityAndDestinationCity(sourceCity, destinationCity);
+	public List<Route> getRouteByCities(String sourceCity, String destinationCity){
+		return routeRepo.findRoutesByCities(sourceCity, destinationCity);
 	}
+	
 }

@@ -3,7 +3,7 @@ package com.bts.dtos;
 import java.util.List;
 
 import com.bts.models.City;
-import com.bts.models.RouteMidCity;
+import com.bts.models.RouteCity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,9 +17,7 @@ import lombok.Setter;
 public class RouteDto {
 	private Long routeId;
 	private String title;
-	private Integer distace; 
+	private Integer distance; 
 	private Boolean isActive;
-	private City sourceCity;
-	private City desinationCity;
-	private List<RouteMidCity> routeMidCities;
+	private List<RouteCityDto> routeCities;
 }

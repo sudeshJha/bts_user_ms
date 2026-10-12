@@ -14,16 +14,16 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name="route_mid_cities")
+@Table(name="route_cities")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class RouteMidCity {
+public class RouteCity {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long routeMidCityId;
+	private Long routeCityId;
 	
 	@Column(nullable=false)
 	private Integer stopSequence;

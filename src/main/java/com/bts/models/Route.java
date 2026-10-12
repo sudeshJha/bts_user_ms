@@ -36,12 +36,6 @@ public class Route {
 	private String title;
 	
 	@Column(nullable=false)
-	private Integer distance;
-	
-	@Column(nullable=false)
-	private Boolean isActive;
-	
-	@Column(nullable=false)
 	@CreationTimestamp
 	private LocalDateTime createdAt;
 	
@@ -49,17 +43,9 @@ public class Route {
 	@UpdateTimestamp
 	private LocalDateTime updatedAt;
 	
-	@ManyToOne
-	@JoinColumn(name="source_city_id")
-	private City sourceCity;
-	
-	@ManyToOne
-	@JoinColumn(name="destination_city_id")
-	private City destinationCity;
-	
 	@OneToMany(mappedBy="route")
 	private List<OperatorRoute> operatorRoute;
 	
 	@OneToMany(mappedBy="route")
-	private List<RouteMidCity> midCities;
+	private List<RouteCity> routeCities;
 }

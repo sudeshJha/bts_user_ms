@@ -16,15 +16,15 @@ import lombok.Setter;
 
 
 @Entity
-@Table
+@Table(name="operator_route_cities")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class OperatorRouteMidCity {
+public class OperatorRouteCity {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long operatorRouteMidCityId;
+	private Long operatorRouteCityId;
 	
 	@Column(nullable=false)
 	private Integer haltTime;
@@ -35,7 +35,5 @@ public class OperatorRouteMidCity {
 	
 	@ManyToOne
 	@JoinColumn(name="route_mid_city_id")
-	private RouteMidCity routeMidCity;
-	
-
+	private RouteCity routeCity;
 }

@@ -23,27 +23,14 @@ public class RouteRestController {
 	@GetMapping("/city_route")
 	public ApiResponse<?> masterRouteByCity(@RequestParam String sourceCity, @RequestParam String destinationCity) {
 		
+		System.out.println("REQUEST RECIVED ---- " + sourceCity + " - " + destinationCity);
+		
 		if(sourceCity == null || destinationCity == null) {
 			return new ApiResponse<>("Source and Destination City cannot be empty");
 		}
 		
-		List<Route> routes = routeService.getRoutesBySourceAndDestinationCity(sourceCity, destinationCity);
 		
-		if(routes.size() == 0) {
-			return new ApiResponse("There is no matching routes for those cities");
-		}
-		
-		List<RouteDto> routesDto = new ArrayList<RouteDto>();
-		
-		for(Route route : routes) {
-			RouteDto routeDto = new RouteDto();
-			BeanUtils.copyProperties(route, routeDto);
-			routesDto.add(routeDto);
-		}
-		
-		return new ApiResponse("Successfully fetched routes",routesDto);
-		
-		
+		return null;
 	}
 
 }

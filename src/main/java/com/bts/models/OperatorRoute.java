@@ -35,7 +35,11 @@ public class OperatorRoute {
 	@ManyToOne
 	@JoinColumn(name="route_id")
 	private Route route;
+	
+	
+	@Column(nullable=false)
+	private Boolean isActive;
 
 	@OneToMany(mappedBy="operatorRoute")
-	private List<OperatorRouteMidCity> operatorRouteMidCities;
+	private List<OperatorRouteCity> operatorRouteCities;
 }
