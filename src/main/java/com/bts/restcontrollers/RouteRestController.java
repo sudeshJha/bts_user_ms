@@ -29,8 +29,21 @@ public class RouteRestController {
 			return new ApiResponse<>("Source and Destination City cannot be empty");
 		}
 		
+		List<Route> routes = routeService.getRoutesBySourceAndDestinationCity(sourceCity, destinationCity);
 		
-		return null;
+		if(routes.isEmpty()) {
+			return new ApiResponse<>("There is no matching routes for those cities");
+		}
+		
+		List<RouteDto> routesDto = new ArrayList<RouteDto>();
+		
+		for(Route route : routes) {
+			RouteDto routeDto = new RouteDto();
+			BeanUtils.copyProperties(route, routeDto);
+			routesDto.add(routeDto);	
+		}
+		
+		return new ApiResponse<>("Successfully fetched routes",routesDto);
 	}
 
 }
