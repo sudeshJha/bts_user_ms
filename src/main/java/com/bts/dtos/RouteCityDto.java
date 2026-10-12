@@ -17,5 +17,5 @@ public class RouteCityDto {
 	private Integer stopSequence;
 	private Integer distanceFromSource;
 	private Integer timeFromSource;
-	private City city;
+	private CityDto city;
 }

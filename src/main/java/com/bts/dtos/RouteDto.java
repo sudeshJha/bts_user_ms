@@ -17,7 +17,5 @@ import lombok.Setter;
 public class RouteDto {
 	private Long routeId;
 	private String title;
-	private Integer distance; 
-	private Boolean isActive;
 	private List<RouteCityDto> routeCities;
 }
