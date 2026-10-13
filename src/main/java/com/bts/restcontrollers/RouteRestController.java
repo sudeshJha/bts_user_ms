@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bts.dtos.ApiResponse;
+import com.bts.dtos.CityDto;
 import com.bts.dtos.RouteCityDto;
 import com.bts.dtos.RouteDto;
 import com.bts.models.Route;
@@ -46,6 +47,8 @@ public class RouteRestController {
 			for (RouteCity routeCity : route.getRouteCities()) {
 				RouteCityDto routeCityDto = new RouteCityDto();
 				BeanUtils.copyProperties(routeCity, routeCityDto);
+				
+				routeCityDto.setName(routeCity.getCity().getName());
 				cities.add(routeCityDto);
 			}
 			routeDto.setRouteCities(cities);

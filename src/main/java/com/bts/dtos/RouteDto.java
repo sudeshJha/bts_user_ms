@@ -15,7 +15,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RouteDto {
-	private Long routeId;
 	private String title;
 	private List<RouteCityDto> routeCities;
 }

@@ -13,9 +13,8 @@ import lombok.Setter;
 @AllArgsConstructor
 public class RouteCityDto {
 	
-	private Long routeCityId;
 	private Integer stopSequence;
 	private Integer distanceFromSource;
 	private Integer timeFromSource;
-	private CityDto city;
+	private String name;
 }
