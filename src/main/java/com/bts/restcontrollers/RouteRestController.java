@@ -33,7 +33,7 @@ public class RouteRestController {
 		List<Route> routes = routeService.getRoutesBySourceAndDestinationCity(sourceCity, destinationCity);
 
 		if (routes.isEmpty()) {
-			return new ApiResponse<>("There is no matching routes for those cities");
+			return new ApiResponse<>("There is no matching routes for those cities",routes);
 		}
 
 		List<RouteDto> routesDto = new ArrayList<RouteDto>();
@@ -44,12 +44,26 @@ public class RouteRestController {
 			BeanUtils.copyProperties(route, routeDto);
 			List<RouteCityDto> cities = new ArrayList<RouteCityDto>();
 			
+			boolean isMidCity = false;
+			
 			for (RouteCity routeCity : route.getRouteCities()) {
 				RouteCityDto routeCityDto = new RouteCityDto();
 				BeanUtils.copyProperties(routeCity, routeCityDto);
 				
-				routeCityDto.setName(routeCity.getCity().getName());
-				cities.add(routeCityDto);
+				Integer sequence = routeCity.getStopSequence();
+				
+				if(routeCity.getCity().getName().equals(sourceCity)) {
+					isMidCity = true;
+				}
+				
+				if(isMidCity) {
+					routeCityDto.setName(routeCity.getCity().getName());
+					cities.add(routeCityDto);
+				}
+				
+				if(routeCity.getCity().getName().equals(destinationCity)) {
+					isMidCity = false;
+				}
 			}
 			routeDto.setRouteCities(cities);
 			routesDto.add(routeDto);
