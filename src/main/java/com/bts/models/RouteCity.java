@@ -12,6 +12,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.FieldNameConstants;
 
 @Entity
 @Table(name="route_cities")
@@ -41,6 +42,12 @@ public class RouteCity {
 	@ManyToOne
 	@JoinColumn(name="route_id")
 	private Route route;
+	
+	public RouteCity(Long routeCityId) {
+		this.routeCityId = routeCityId;
+	}
+	
+	
 }
 
 

@@ -48,4 +48,8 @@ public class Route {
 	
 	@OneToMany(mappedBy="route")
 	private List<RouteCity> routeCities;
+	
+	public Route(Long routeId) {
+		this.routeId = routeId;
+	}
 }

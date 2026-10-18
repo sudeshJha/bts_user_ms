@@ -5,23 +5,37 @@ import java.util.List;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bts.dtos.ApiResponse;
 import com.bts.dtos.CityDto;
+import com.bts.dtos.OperatorRouteCityDto;
+import com.bts.dtos.OperatorRouteDto;
 import com.bts.dtos.RouteCityDto;
 import com.bts.dtos.RouteDto;
+import com.bts.models.Operator;
+import com.bts.models.OperatorRoute;
+import com.bts.models.OperatorRouteCity;
 import com.bts.models.Route;
 import com.bts.models.RouteCity;
+import com.bts.models.User;
+import com.bts.services.OperatorService;
 import com.bts.services.RouteService;
+import com.bts.services.UserService;
 
 @RestController
 public class RouteRestController {
 
 	@Autowired
 	private RouteService routeService;
+	
+	@Autowired 
+	private OperatorService operatorService;
 
 	@GetMapping("/city_route")
 	public ApiResponse<?> masterRouteByCity(@RequestParam String sourceCity, @RequestParam String destinationCity) {
@@ -49,9 +63,7 @@ public class RouteRestController {
 			for (RouteCity routeCity : route.getRouteCities()) {
 				RouteCityDto routeCityDto = new RouteCityDto();
 				BeanUtils.copyProperties(routeCity, routeCityDto);
-				
-				Integer sequence = routeCity.getStopSequence();
-				
+								
 				if(routeCity.getCity().getName().equals(sourceCity)) {
 					isMidCity = true;
 				}
@@ -70,6 +82,36 @@ public class RouteRestController {
 		}
 
 		return new ApiResponse<>("Successfully fetched routes", routesDto);
+	}
+	
+	@PostMapping("/add_operator_route")
+	public ApiResponse<?> addOperatorRoute(@RequestBody OperatorRouteDto operatorRouteDto, Authentication authentication){
+		System.out.println("Request  Recieved");
+		
+		
+		String email = authentication.getName();
+		Operator operator = operatorService.getOperatorByEmail(email);
+		List<OperatorRouteCity> operatorRouteCities = new ArrayList<>();
+		
+		OperatorRoute operatorRoute = new OperatorRoute();
+		BeanUtils.copyProperties(operatorRouteDto, operatorRoute);
+		
+		for(OperatorRouteCityDto operatorRouteCityDto : operatorRouteDto.getOperatorRouteCities()) {
+			OperatorRouteCity operatorRouteCity = new OperatorRouteCity();
+			BeanUtils.copyProperties(operatorRouteCityDto, operatorRouteCity);
+			
+			operatorRouteCity.setRouteCity(new RouteCity(operatorRouteCity.getRouteCity().getRouteCityId()));
+			
+			operatorRouteCities.add(operatorRouteCity);
+		}
+		
+		operatorRoute.setRoute(new Route(operatorRouteDto.getRoute().getRouteId()));
+		operatorRoute.setOperatorRouteCities(operatorRouteCities);
+		operatorRoute.setOperator(operator);
+		
+		return null;
+		
+		
 	}
 
 }

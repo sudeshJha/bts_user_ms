@@ -54,4 +54,9 @@ public class OperatorService {
 	public Operator getOperatorByUserId(Long userId) {
 		return operatorRepo.findByUser_UserId(userId);
 	}
+	
+	public Operator getOperatorByEmail(String email) {
+		User user = userService.getUserByEmail(email);
+		return getOperatorByUserId(user.getUserId());
+	}
 }

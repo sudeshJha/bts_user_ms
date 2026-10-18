@@ -1,6 +1,5 @@
 package com.bts.dtos;
 
-import com.bts.models.City;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,6 +12,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class RouteCityDto {
 	
+	private Long routeCityId;
 	private Integer stopSequence;
 	private Integer distanceFromSource;
 	private Integer timeFromSource;
