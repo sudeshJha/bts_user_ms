@@ -85,9 +85,7 @@ public class RouteRestController {
 	}
 	
 	@PostMapping("/add_operator_route")
-	public ApiResponse<?> addOperatorRoute(@RequestBody OperatorRouteDto operatorRouteDto, Authentication authentication){
-		System.out.println("Request  Recieved");
-		
+	public ApiResponse<?> addOperatorRoute(@RequestBody OperatorRouteDto operatorRouteDto, Authentication authentication){		
 		
 		String email = authentication.getName();
 		Operator operator = operatorService.getOperatorByEmail(email);
@@ -109,9 +107,7 @@ public class RouteRestController {
 		operatorRoute.setOperatorRouteCities(operatorRouteCities);
 		operatorRoute.setOperator(operator);
 		
-		return null;
-		
-		
+		return new ApiResponse<OperatorRouteDto>("Route addded successfully", operatorRouteDto);
 	}
 
 }

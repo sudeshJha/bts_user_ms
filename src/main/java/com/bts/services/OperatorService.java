@@ -28,6 +28,8 @@ public class OperatorService {
 	@Autowired
 	private OperatorRepo operatorRepo;
 	
+	
+	
 	public Operator operatorSignup(Operator operator, MultipartFile license, MultipartFile banner) {
 
 		operator.getUser().setUserType(UserType.OPERATOR);
