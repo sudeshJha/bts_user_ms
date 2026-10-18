@@ -98,7 +98,7 @@ public class RouteRestController {
 			OperatorRouteCity operatorRouteCity = new OperatorRouteCity();
 			BeanUtils.copyProperties(operatorRouteCityDto, operatorRouteCity);
 			
-			operatorRouteCity.setRouteCity(new RouteCity(operatorRouteCity.getRouteCity().getRouteCityId()));
+			operatorRouteCity.setRouteCity(new RouteCity(operatorRouteCityDto.getRouteCity().getRouteCityId()));
 			
 			operatorRouteCities.add(operatorRouteCity);
 		}
