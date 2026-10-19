@@ -1,8 +1,11 @@
 package com.bts.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.bts.models.Operator;
 import com.bts.models.OperatorRoute;
 import com.bts.repos.OperatorRouteRepo;
 
@@ -16,4 +19,7 @@ public class OperatorRouteService {
 		return operatorRouteRepo.save(operatorRoute);
 	}
 
+	public List<OperatorRoute> getAllOperatorRoutes(Operator operator){
+		return operatorRouteRepo.findByOperator(operator);
+	}
 }

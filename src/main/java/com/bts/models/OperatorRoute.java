@@ -2,6 +2,7 @@ package com.bts.models;
 
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -39,6 +40,6 @@ public class OperatorRoute {
 	@Column(nullable=false)
 	private Boolean isActive = false;
 
-	@OneToMany(mappedBy="operatorRoute")
+	@OneToMany(mappedBy="operatorRoute", cascade = CascadeType.ALL)
 	private List<OperatorRouteCity> operatorRouteCities;
 }

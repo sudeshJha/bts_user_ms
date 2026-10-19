@@ -24,6 +24,7 @@ import com.bts.models.OperatorRouteCity;
 import com.bts.models.Route;
 import com.bts.models.RouteCity;
 import com.bts.models.User;
+import com.bts.services.OperatorRouteService;
 import com.bts.services.OperatorService;
 import com.bts.services.RouteService;
 import com.bts.services.UserService;
@@ -37,8 +38,11 @@ public class RouteRestController {
 	@Autowired 
 	private OperatorService operatorService;
 
+	@Autowired
+	private OperatorRouteService operatorRouteService;
+	
 	@GetMapping("/city_route")
-	public ApiResponse<?> masterRouteByCity(@RequestParam String sourceCity, @RequestParam String destinationCity) {
+	public ApiResponse<?> masterRoutesByCity(@RequestParam String sourceCity, @RequestParam String destinationCity) {
 
 		if (sourceCity == null || destinationCity == null) {
 			return new ApiResponse<>("Source and Destination City cannot be empty");
@@ -106,8 +110,28 @@ public class RouteRestController {
 		operatorRoute.setRoute(new Route(operatorRouteDto.getRoute().getRouteId()));
 		operatorRoute.setOperatorRouteCities(operatorRouteCities);
 		operatorRoute.setOperator(operator);
+		operatorRoute.setIsActive(false);
+		
+		
+		operatorRouteService.addOperatorRoute(operatorRoute);
 		
 		return new ApiResponse<OperatorRouteDto>("Route addded successfully", operatorRouteDto);
 	}
 
+	@GetMapping("/operator_routes")
+	public ApiResponse<?> allOperatorRoutes(Authentication authentication){
+		
+		Operator operator= operatorService.getOperatorByEmail(authentication.getName());
+		
+		List<OperatorRoute> operatorRoutes = operatorRouteService.getAllOperatorRoutes(operator);
+		
+		String message = "Successfully fetched operator routes";
+		
+		if(operatorRoutes.isEmpty()) {
+			message = "No Routes found.";
+		}
+		
+		return new ApiResponse<List<OperatorRoute>>(message, operatorRoutes);
+		
+	}
 }
