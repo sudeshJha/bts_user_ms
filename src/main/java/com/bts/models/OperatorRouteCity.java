@@ -1,6 +1,8 @@
 package com.bts.models;
 
 
+import com.bts.dtos.OperatorRouteCityDto;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -36,4 +38,14 @@ public class OperatorRouteCity {
 	@ManyToOne
 	@JoinColumn(name="route_mid_city_id")
 	private RouteCity routeCity;
+	
+	public OperatorRouteCityDto getDto() {
+		OperatorRouteCityDto operatorRouteCityDto = new OperatorRouteCityDto();
+		
+		operatorRouteCityDto.setOperatorRouteCityId(this.operatorRouteCityId);
+		operatorRouteCityDto.setHaltTime(this.haltTime);
+		operatorRouteCityDto.setRouteCity(this.routeCity.getDto());
+		
+		return operatorRouteCityDto;
+	}
 }

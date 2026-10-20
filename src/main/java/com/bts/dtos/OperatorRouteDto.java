@@ -13,7 +13,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class OperatorRouteDto {
 	
-	private Integer operatorRouteId;
+	private Long operatorRouteId;
 	private RouteDto route;
 	private Boolean isActive;
 	private List<OperatorRouteCityDto> operatorRouteCities;

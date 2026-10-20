@@ -1,5 +1,7 @@
 package com.bts.models;
 
+import com.bts.dtos.RouteCityDto;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -47,6 +49,18 @@ public class RouteCity {
 		this.routeCityId = routeCityId;
 	}
 	
+	
+	public RouteCityDto getDto() {
+		RouteCityDto routeCityDto = new RouteCityDto();
+		
+		routeCityDto.setRouteCityId(this.routeCityId);
+		routeCityDto.setDistanceFromSource(this.distanceFromSource);
+		routeCityDto.setTimeFromSource(this.timeFromSource);
+		routeCityDto.setStopSequence(this.stopSequence);
+		routeCityDto.setName(this.city.getName());
+		
+		return routeCityDto;
+	}
 	
 }
 

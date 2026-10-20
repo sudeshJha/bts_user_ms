@@ -1,10 +1,14 @@
 package com.bts.models;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.time.LocalDateTime;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+
+import com.bts.dtos.RouteCityDto;
+import com.bts.dtos.RouteDto;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -51,5 +55,21 @@ public class Route {
 	
 	public Route(Long routeId) {
 		this.routeId = routeId;
+	}
+	
+	public RouteDto getDto() {
+		RouteDto routeDto = new RouteDto();
+		
+		List<RouteCityDto> routeCitiesDto = new ArrayList<>();
+		
+		for(RouteCity routeCity : this.routeCities) {
+			routeCitiesDto.add(routeCity.getDto());
+		}
+		
+		routeDto.setRouteId(this.routeId);
+		routeDto.setTitle(this.title);
+		routeDto.setRouteCities(routeCitiesDto);
+		
+		return routeDto;
 	}
 }

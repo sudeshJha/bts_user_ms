@@ -103,7 +103,7 @@ public class RouteRestController {
 			BeanUtils.copyProperties(operatorRouteCityDto, operatorRouteCity);
 			
 			operatorRouteCity.setRouteCity(new RouteCity(operatorRouteCityDto.getRouteCity().getRouteCityId()));
-			
+			operatorRouteCity.setOperatorRoute(operatorRoute);
 			operatorRouteCities.add(operatorRouteCity);
 		}
 		
@@ -131,7 +131,16 @@ public class RouteRestController {
 			message = "No Routes found.";
 		}
 		
-		return new ApiResponse<List<OperatorRoute>>(message, operatorRoutes);
+		List<OperatorRouteDto> operatorRoutesDto = new ArrayList<>();
 		
+		for(OperatorRoute operatorRoute : operatorRoutes) {						
+			operatorRoutesDto.add(operatorRoute.getDto());
+			System.out.println("-------------------------------------");
+			for(OperatorRouteCity operatorRouteCity : operatorRoute.getOperatorRouteCities()) {
+				System.out.println(operatorRouteCity.getOperatorRouteCityId());
+			}
+		}
+		
+		return new ApiResponse<List<OperatorRouteDto>>(message, operatorRoutesDto);
 	}
 }

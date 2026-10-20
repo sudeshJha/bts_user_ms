@@ -1,6 +1,10 @@
 package com.bts.models;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import com.bts.dtos.OperatorRouteCityDto;
+import com.bts.dtos.OperatorRouteDto;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -27,7 +31,7 @@ public class OperatorRoute {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Integer operatorRouteId;
+	private Long operatorRouteId;
 	
 	@ManyToOne
 	@JoinColumn(name="operator_id")
@@ -42,4 +46,24 @@ public class OperatorRoute {
 
 	@OneToMany(mappedBy="operatorRoute", cascade = CascadeType.ALL)
 	private List<OperatorRouteCity> operatorRouteCities;
+	
+	public OperatorRouteDto getDto() {
+		OperatorRouteDto operatorRouteDto = new OperatorRouteDto();
+		
+		List<OperatorRouteCityDto> operatorRouteCitiesDto = new ArrayList<>();
+		
+		for(OperatorRouteCity operatorRouteCity : this.operatorRouteCities) {
+			System.out.println(operatorRouteCity.getOperatorRouteCityId());
+			operatorRouteCitiesDto.add(operatorRouteCity.getDto());
+		}
+		
+		
+		operatorRouteDto.setOperatorRouteId(this.operatorRouteId);
+		operatorRouteDto.setIsActive(this.isActive);
+		operatorRouteDto.setRoute(this.route.getDto());
+		operatorRouteDto.setOperatorRouteCities(operatorRouteCitiesDto);
+		
+		return operatorRouteDto;
+		
+	}
 }
