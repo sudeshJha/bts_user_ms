@@ -7,6 +7,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -135,12 +136,28 @@ public class RouteRestController {
 		
 		for(OperatorRoute operatorRoute : operatorRoutes) {						
 			operatorRoutesDto.add(operatorRoute.getDto());
-			System.out.println("-------------------------------------");
-			for(OperatorRouteCity operatorRouteCity : operatorRoute.getOperatorRouteCities()) {
-				System.out.println(operatorRouteCity.getOperatorRouteCityId());
-			}
 		}
 		
 		return new ApiResponse<List<OperatorRouteDto>>(message, operatorRoutesDto);
+	}
+	
+	@GetMapping("/operator_routes/{id}")
+	public ApiResponse<OperatorRouteDto> operatorRouteById(@PathVariable Long id){
+		
+		OperatorRoute operatorRoute = operatorRouteService.getOperatorRouteById(id);
+		
+		String message = "Successfully found the operator route.";
+		OperatorRouteDto operatorRouteDto = new OperatorRouteDto();
+		
+		if(operatorRoute == null) {
+			message = "Could not find the Operator Route.";
+			operatorRouteDto = null;
+		}
+		else {
+			operatorRoute.getDto();
+		}
+		
+		return new ApiResponse<OperatorRouteDto>(message, operatorRouteDto);
+		
 	}
 }
