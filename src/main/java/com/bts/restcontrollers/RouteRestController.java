@@ -154,7 +154,7 @@ public class RouteRestController {
 			operatorRouteDto = null;
 		}
 		else {
-			operatorRoute.getDto();
+			operatorRouteDto = operatorRoute.getDto();
 		}
 		
 		return new ApiResponse<OperatorRouteDto>(message, operatorRouteDto);
