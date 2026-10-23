@@ -92,8 +92,7 @@ public class RouteRestController {
 	@PostMapping("/add_operator_route")
 	public ApiResponse<?> addOperatorRoute(@RequestBody OperatorRouteDto operatorRouteDto, Authentication authentication){		
 		
-		String email = authentication.getName();
-		Operator operator = operatorService.getOperatorByEmail(email);
+		Operator operator = operatorService.getOperatorByEmail(authentication.getName());
 		List<OperatorRouteCity> operatorRouteCities = new ArrayList<>();
 		
 		OperatorRoute operatorRoute = new OperatorRoute();
