@@ -16,6 +16,7 @@ import com.bts.dtos.OperatorFareFactorDto;
 import com.bts.models.FareFactor;
 import com.bts.models.Operator;
 import com.bts.models.OperatorFareFactor;
+import com.bts.services.OperatorFareFactorService;
 import com.bts.services.OperatorService;
 
 @RestController
@@ -24,15 +25,39 @@ public class FareFactorRestController {
 	@Autowired
 	private OperatorService operatorService;
 	
+	@Autowired
+	private OperatorFareFactorService operatorFareFactorService;
+	
 	@GetMapping("/fare_factors")
 	public ApiResponse<List<FareFactorDto>> allFareFactors(){
 		List<FareFactorDto> fareFactorsDto = new ArrayList<>();
 
 	    for (FareFactor fareFactor : FareFactor.values()) {
-	    	fareFactorsDto.add(fareFactor.getDto());
+	    	fareFactorsDto.add(FareFactorDto.getDto(fareFactor));
 	    }
 
 	    return new ApiResponse<>("Successfully fetched fare factors", fareFactorsDto);
+	}
+	
+	@GetMapping("/operator_fare_factors")
+	public ApiResponse<List<OperatorFareFactorDto>> allOperatorFareFactors(Authentication authentication){
+		
+		Operator operator= operatorService.getOperatorByEmail(authentication.getName());
+		
+		List<OperatorFareFactor> operatorFareFactors = operatorFareFactorService.getAllOperatorFareFactors(operator);
+		List<OperatorFareFactorDto> operatorFareFactorsDto = new ArrayList<>();
+
+		if(operatorFareFactors.isEmpty()) {
+			return new ApiResponse<>("There are no fare factors to this operator",operatorFareFactorsDto);
+		
+		}
+		
+		
+		for(OperatorFareFactor operatorFareFactor : operatorFareFactors) {
+			operatorFareFactorsDto.add(operatorFareFactor.getDto());
+		}
+		
+		return new ApiResponse<>("Successfully fetched Operator Fare Factors",operatorFareFactorsDto);
 	}
 	
 	@PostMapping("/add_operator_fare_factor")
@@ -49,14 +74,16 @@ public class FareFactorRestController {
 		}
 		
 		Operator operator= operatorService.getOperatorByEmail(authentication.getName());
-
-
 		
 		OperatorFareFactor operatorFareFactor = new OperatorFareFactor();
 		operatorFareFactor.setPrice(operatorFareFactorDto.getPrice());
 		operatorFareFactor.setOperator(operator);
 		operatorFareFactor.setFareFactor(fareFactor);
 		
+		operatorFareFactorService.add(operatorFareFactor);
+		
 		return new ApiResponse<OperatorFareFactorDto>("Fare factor added successfully");
 	}
+	
+	
 }

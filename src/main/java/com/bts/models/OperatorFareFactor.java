@@ -1,5 +1,8 @@
 package com.bts.models;
 
+import com.bts.dtos.FareFactorDto;
+import com.bts.dtos.OperatorFareFactorDto;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -34,5 +37,16 @@ public class OperatorFareFactor {
 	@ManyToOne
 	@JoinColumn(name="operator_id")
 	private Operator operator;
+	
+	public OperatorFareFactorDto getDto() {
+		OperatorFareFactorDto operatorFareFactorDto = new OperatorFareFactorDto();
+		
+		
+		operatorFareFactorDto.setPrice(this.price);
+		operatorFareFactorDto.setFareFactor(FareFactorDto.getDto(this.fareFactor));
+		
+		return operatorFareFactorDto;
+		
+	}
 
 }

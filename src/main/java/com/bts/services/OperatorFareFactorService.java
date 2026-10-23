@@ -1,5 +1,7 @@
 package com.bts.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.bts.models.FareFactor;
@@ -17,5 +19,9 @@ public class OperatorFareFactorService {
 
 	public boolean exists(Operator operator, FareFactor fareFactor) {
 		return operatorFareFactorRepo.existsByOperatorAndFareFactor(operator, fareFactor);
+	}
+	
+	public List<OperatorFareFactor> getAllOperatorFareFactors(Operator operator) {
+		return operatorFareFactorRepo.findAByOperator(operator);
 	}
 }
