@@ -3,12 +3,14 @@ package com.bts.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.bts.models.FareFactor;
 import com.bts.models.Operator;
 import com.bts.models.OperatorFareFactor;
 import com.bts.repos.OperatorFareFactorRepo;
 
+@Service
 public class OperatorFareFactorService {
 	@Autowired
 	private OperatorFareFactorRepo operatorFareFactorRepo;
