@@ -1,11 +1,13 @@
 package com.bts.models;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -28,4 +30,10 @@ public class Bus {
 	private Boolean isActive;
 	private LocalDateTime createdAt;
 	private LocalDateTime updatedAt;
+	
+	@OneToMany(mappedBy="bus")
+	private List<BusImage> busImages;
+	
+	@OneToMany(mappedBy="bus")
+	private List<BusFeature> busFeatures;
 }

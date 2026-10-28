@@ -17,7 +17,7 @@ public enum FareFactor {
 	RECLINER_SEAT("Recliner Seat"),
 	MEAL("Meal");
 	
-	private  final String label;
+	private final String label;
 	
 	public FareFactorDto getDto() {
 		FareFactorDto fareFactorDto = new FareFactorDto();
