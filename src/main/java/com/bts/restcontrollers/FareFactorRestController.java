@@ -49,9 +49,7 @@ public class FareFactorRestController {
 
 		if(operatorFareFactors.isEmpty()) {
 			return new ApiResponse<>("There are no fare factors to this operator",operatorFareFactorsDto);
-		
 		}
-		
 		
 		for(OperatorFareFactor operatorFareFactor : operatorFareFactors) {
 			operatorFareFactorsDto.add(operatorFareFactor.getDto());
