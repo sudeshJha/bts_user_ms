@@ -18,12 +18,10 @@ public class SeatLayoutRestController {
 	@GetMapping("/seat_layout_types")
 	public ApiResponse<List<SeatLayoutTypeDto>> allSeatLayoutTypes(){
 		
-		System.out.println("Seat Layout Request Recieved");
 		List<SeatLayoutTypeDto> seatLayoutTypesDto = new ArrayList<>();
 		
 		for(SeatLayoutType seatLayoutType : SeatLayoutType.values()) {
 			seatLayoutTypesDto.add(seatLayoutType.getDto());
-			System.out.println(seatLayoutTypesDto.get(seatLayoutTypesDto.size()-1).getCode());
 		}
 		
 		return new ApiResponse<>("Successfully fetched seat layout types",seatLayoutTypesDto);

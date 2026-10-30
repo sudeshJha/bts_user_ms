@@ -3,6 +3,7 @@ package com.bts.models;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -13,7 +14,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 @Entity
 @Table(name="buses")
 @Setter
@@ -21,12 +21,21 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Bus {
-
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer busId;
+	
+	@Column(nullable=false)
 	private String rtoNumber;
+	
+	@Column(nullable=false)
 	private String manufacturer;
+	
+	@Column(nullable=false, length = 17)
+	private String VIN;
+	
+	@Column(nullable=false)
 	private Boolean isActive;
 	private LocalDateTime createdAt;
 	private LocalDateTime updatedAt;
@@ -37,3 +46,4 @@ public class Bus {
 	@OneToMany(mappedBy="bus")
 	private List<BusFeature> busFeatures;
 }
+

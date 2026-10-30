@@ -1,6 +1,7 @@
 package com.bts.models;
 
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -24,10 +25,11 @@ public class BusLayout {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)	
 	private Integer busLayoutId;
 	
+	@Column(nullable=false)
+	private Integer seaterRows;
+
 	private Integer backRowSeats;
-	private Integer lowerDeckerSleeperRows;
-	private Integer lowerDeckerSeaterRows;
-	private Integer upperDeckerRows;
+	private Integer sleeperRows;
 	
 	@ManyToOne
 	@JoinColumn(name="seat_layout_id")
