@@ -36,7 +36,7 @@ public class SeatLayoutRestController {
 		for(DeckType deckType : DeckType.values()) {
 			deckTypesDto.add(deckType.getDto());
 		}
-		
+
 		return new ApiResponse<>("Successfully fetched deck types",deckTypesDto);
 	}
 }

@@ -41,7 +41,6 @@ public class OperatorFareFactor {
 	public OperatorFareFactorDto getDto() {
 		OperatorFareFactorDto operatorFareFactorDto = new OperatorFareFactorDto();
 		
-		
 		operatorFareFactorDto.setPrice(this.price);
 		operatorFareFactorDto.setFareFactor(FareFactorDto.getDto(this.fareFactor));
 		

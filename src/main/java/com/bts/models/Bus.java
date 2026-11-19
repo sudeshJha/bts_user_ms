@@ -8,7 +8,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -37,6 +40,7 @@ public class Bus {
 	
 	@Column(nullable=false)
 	private Boolean isActive;
+	
 	private LocalDateTime createdAt;
 	private LocalDateTime updatedAt;
 	
@@ -45,5 +49,13 @@ public class Bus {
 	
 	@OneToMany(mappedBy="bus")
 	private List<BusFeature> busFeatures;
+	
+	@OneToOne
+	@JoinColumn(name="bus_layout_id")
+	private BusLayout busLayout;
+	
+	@ManyToOne
+	@JoinColumn(name="operator_id")
+	private Operator operator;
 }
 

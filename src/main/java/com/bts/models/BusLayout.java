@@ -28,7 +28,10 @@ public class BusLayout {
 	@Column(nullable=false)
 	private Integer seaterRows;
 
+	@Column(nullable=false)
 	private Integer backRowSeats;
+	
+	@Column(nullable=false)
 	private Integer sleeperRows;
 	
 	@ManyToOne

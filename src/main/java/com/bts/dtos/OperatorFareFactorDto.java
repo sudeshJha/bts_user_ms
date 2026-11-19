@@ -11,6 +11,6 @@ import lombok.Setter;
 @AllArgsConstructor
 public class OperatorFareFactorDto {
 
-	FareFactorDto fareFactor;
-	Float price;
+	private FareFactorDto fareFactor;
+	private Float price;
 }
