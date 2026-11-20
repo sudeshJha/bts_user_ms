@@ -32,9 +32,14 @@ public class FileUtil {
 	public void fileUpload(String uploadPath, MultipartFile file) {
 		
 		String fileName = file.getOriginalFilename();
-		Path path = Paths.get(uploadPath + "/" + fileName);
+		Path dirPath = Paths.get(uploadPath);
+		Path path = dirPath.resolve(fileName);
 		
 		try {
+			
+			if (!Files.exists(dirPath)) {
+		        Files.createDirectories(dirPath);
+		    }
 			
 			Files.write(path, file.getBytes());
 		}catch(IOException exp) {

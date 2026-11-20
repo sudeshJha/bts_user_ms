@@ -22,8 +22,8 @@ public class BusDto {
 	private String rtoNumber;
 	private String manufacturer;
 	private Boolean isActive;
+	private BusLayoutDto busLayout;
 	private List<String> busImages;
-	private List<BusLayoutDto> busLayout;
 	private List<FareFactorDto> busFeatures;
 	
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
@@ -36,7 +36,7 @@ public class BusDto {
 		bus.setRtoNumber(this.rtoNumber);
 		bus.setManufacturer(this.manufacturer);
 		bus.setIsActive(this.isActive);
-		
+		bus.setBusLayout(this.busLayout.getEntity());
 		
 		return bus;
 	}

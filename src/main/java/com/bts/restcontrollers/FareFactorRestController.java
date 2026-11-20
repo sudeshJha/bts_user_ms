@@ -60,7 +60,6 @@ public class FareFactorRestController {
 	
 	@PostMapping("/add_operator_fare_factor")
 	public ApiResponse<?> addOperatorFareFactor(@RequestBody OperatorFareFactorDto operatorFareFactorDto, Authentication authentication){
-		System.out.println("REQUEST RECIVED-------------------------");
 		
 		if (operatorFareFactorDto.getFareFactor() == null || operatorFareFactorDto.getPrice() == null || operatorFareFactorDto.getPrice() <= 0) {
 			return new ApiResponse<>("Fare factor and a price greater than 0 are required");
