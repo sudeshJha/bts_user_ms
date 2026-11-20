@@ -22,7 +22,7 @@ public class BusFeature {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Integer busFeatureId;
+	private Long busFeatureId;
 	
 	@ManyToOne
 	@JoinColumn(name="operator_fare_factor_id")

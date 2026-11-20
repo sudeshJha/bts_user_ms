@@ -24,7 +24,7 @@ import lombok.Setter;
 public class SeatLayout {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Integer seatLayoutId;
+	private Long seatLayoutId;
 	
 	@Enumerated(EnumType.STRING)
 	private SeatLayoutType seatLayoutType;

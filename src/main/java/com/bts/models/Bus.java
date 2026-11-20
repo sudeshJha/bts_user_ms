@@ -27,7 +27,7 @@ public class Bus {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Integer busId;
+	private Long busId;
 	
 	@Column(nullable=false)
 	private String rtoNumber;
@@ -36,7 +36,7 @@ public class Bus {
 	private String manufacturer;
 	
 	@Column(nullable=false, length = 17)
-	private String VIN;
+	private String vin;
 	
 	@Column(nullable=false)
 	private Boolean isActive;

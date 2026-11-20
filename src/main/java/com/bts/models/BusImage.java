@@ -22,7 +22,7 @@ import lombok.Setter;
 public class BusImage {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Integer busImageId;
+	private Long busImageId;
 	
 	@Column(nullable = false)
 	private String path;

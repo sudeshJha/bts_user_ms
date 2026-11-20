@@ -4,6 +4,9 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.bts.models.Bus;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,8 +22,23 @@ public class BusDto {
 	private String rtoNumber;
 	private String manufacturer;
 	private Boolean isActive;
-	private List<MultipartFile> busImages;
+	private List<String> busImages;
 	private List<BusLayoutDto> busLayout;
 	private List<FareFactorDto> busFeatures;
+	
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	private List<MultipartFile> images;
+	
+	public Bus getEntity() {
+		Bus bus = new Bus();
+		
+		bus.setVin(this.vin);
+		bus.setRtoNumber(this.rtoNumber);
+		bus.setManufacturer(this.manufacturer);
+		bus.setIsActive(this.isActive);
+		
+		
+		return bus;
+	}
 	
 }

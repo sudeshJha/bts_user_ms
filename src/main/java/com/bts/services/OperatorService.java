@@ -38,11 +38,9 @@ public class OperatorService {
 		
 		String uploadPath = uploadDirectory + File.separator + user.getUserId(); 
 	
-//		upload license
 		fileUtil.fileUpload(uploadPath, license);
 		operator.setLicenseUrl(uploadPath + File.separator + license.getOriginalFilename());
 		
-//		upload banner
 		if(banner != null && !banner.isEmpty()) {
 			fileUtil.fileUpload(uploadPath, banner);
 			operator.setBannerUrl(uploadPath + File.separator + banner.getOriginalFilename());

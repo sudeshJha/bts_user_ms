@@ -23,7 +23,7 @@ import lombok.Setter;
 public class BusLayout {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)	
-	private Integer busLayoutId;
+	private Long busLayoutId;
 	
 	@Column(nullable=false)
 	private Integer seaterRows;
