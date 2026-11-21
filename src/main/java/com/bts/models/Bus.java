@@ -29,13 +29,13 @@ public class Bus {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long busId;
 	
-	@Column(nullable=false)
+	@Column(nullable=false, unique=true)
 	private String rtoNumber;
 	
 	@Column(nullable=false)
 	private String manufacturer;
 	
-	@Column(nullable=false, length = 17)
+	@Column(nullable=false, length = 17, unique=true)
 	private String vin;
 	
 	@Column(nullable=false)

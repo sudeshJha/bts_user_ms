@@ -61,7 +61,6 @@ public class UserService implements UserDetailsService{
 //		save user in database
 		user = userRepo.save(user);
 		
-		
 //		creating user directory
 		fileUtil.createUserDirectory(user.getUserId());
 		
